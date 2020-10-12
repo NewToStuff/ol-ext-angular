@@ -17,8 +17,8 @@ import { MapidService } from './mapid.service';
   // Include ol style as global
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    '../../../node_modules/ol/ol.css',
-    '../../../node_modules/ol-ext/dist/ol-ext.css'
+    'ol.css',
+    'ol-ext.css'
   ],
   providers: [MapidService]
 })
