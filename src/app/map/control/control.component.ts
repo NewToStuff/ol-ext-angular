@@ -9,6 +9,9 @@ import Tooltip from 'ol-ext/overlay/Tooltip';
 import Popup from 'ol-ext/overlay/Popup';
 import ol_layer_Vector from 'ol/layer/Vector';
 import ol_source_Vector from 'ol/source/Vector';
+import {getLength as ol_sphere_getLength} from 'ol/sphere';
+import {getDistance as ol_sphere_getDistance} from 'ol/sphere';
+import {transform as ol_proj_transform} from 'ol/proj';
 
 
 /**
@@ -60,6 +63,9 @@ export class ControlComponent implements OnInit {
 
     //  Vector layer
     var vector = new ol_layer_Vector( { source: new ol_source_Vector() })
+    map.addLayer(vector);
+
+
 
   // Add the editbar
   var edit = new EditBar({ source: vector.getSource() });
@@ -95,10 +101,28 @@ export class ControlComponent implements OnInit {
     tooltip.setFeature(e.feature);
     tooltip.setInfo('Click to continue drawing line...');
   });
-  edit.getInteraction('DrawPolygon').on('drawstart', function(e){
+
+
+
+// ######################## CHanges here
+
+  /*edit.getInteraction('DrawPolygon').on('drawstart', function(e){
     tooltip.setFeature(e.feature);
     tooltip.setInfo('Click to continue drawing shape...');
-  });
+  }); */
+
+
+  edit.getInteraction('DrawPolygon').on('drawstart', function(e){
+    console.log('CHANGE Draw shape',e);
+    tooltip.setFeature(e.feature);
+    e.feature.getGeometry().on('change', (e) => {calculateMeasure(e, e.target.map_, tooltip)});
+    tooltip.setInfo('Click to continue drawing shape...');
+    });
+
+
+
+
+
   edit.getInteraction('DrawPolygon').on(['change:active','drawend'], function(e){
     tooltip.setFeature();
     tooltip.setInfo(e.oldValue ? '' : 'Click map to start drawing shape...');
@@ -120,5 +144,32 @@ export class ControlComponent implements OnInit {
     tooltip.setInfo(e.oldValue ? '' : 'Click map to start drawing shape...');
   });
 
+
+
+    let calculateMeasure = (e, map,tooltip ) => {
+      // function calculateMeasure(e) {
+        console.log('CalculateMeasure',e, map, tooltip);
+        var geom = e.target;
+        var proj = map.getView().getProjection();
+        console.log('Projection',proj);
+        // var totalLength = 99;
+        var totalLength = tooltip.formatLength(ol_sphere_getLength(geom, { projection: proj }));
+        // Last segment length
+        var g = geom.getCoordinates()[0];
+        var l = g.length-2;
+        var p0 = ol_proj_transform(g[l], proj, 'EPSG:4326')
+        var p1 = ol_proj_transform(g[l-1], proj, 'EPSG:4326')
+        // measure
+        var length = totalLength +' - '+ tooltip.formatLength(ol_sphere_getDistance(p0,p1));
+        var measure = tooltip.get('measure');
+        tooltip.set('measure', (measure ? measure+' - ':'') + length)
+      }
+
   }
+
+
+
+
+
+
 }
