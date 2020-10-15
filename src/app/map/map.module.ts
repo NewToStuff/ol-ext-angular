@@ -7,6 +7,7 @@ import { LayerComponent } from './layer/layer.component';
 import { ControlComponent } from './control/control.component';
 import { MousePositionComponent } from './control/mouse-position.component';
 import { InteractionComponent } from './interaction/interaction.component';
+import { DisplayGeoComponent } from './display/display-geo/display-geo.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { InteractionComponent } from './interaction/interaction.component';
     LayerComponent,
     ControlComponent,
     MousePositionComponent,
-    InteractionComponent
+    InteractionComponent,
+    DisplayGeoComponent
   ],
   imports: [],
   providers: [
@@ -25,7 +27,8 @@ import { InteractionComponent } from './interaction/interaction.component';
     LayerComponent,
     ControlComponent,
     MousePositionComponent,
-    InteractionComponent
- ]
+    InteractionComponent,
+    DisplayGeoComponent
+  ]
 })
 export class MapModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 
 import OlMap from 'ol/Map';
@@ -41,6 +41,9 @@ export class MapComponent implements OnInit {
    */
   @Input() zoom: string;
 
+
+  @Output() geoSaved: EventEmitter<Object> = new EventEmitter();
+
   /**
    * [ol.Map](http://openlayers.org/en/latest/apidoc/ol.Map.html) Openlayer map object
    */
@@ -68,5 +71,12 @@ export class MapComponent implements OnInit {
     // Center on attribute
     this.map.getView().setCenter(fromLonLat([parseFloat(this.lon) || 0, parseFloat(this.lat) || 0]));
     this.map.getView().setZoom(this.zoom);
+
+    this.geoChanged('Map init');
+  }
+
+
+  geoChanged(geo){
+    this.geoSaved.emit(geo);
   }
 }

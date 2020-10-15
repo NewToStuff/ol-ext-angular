@@ -6,8 +6,15 @@ app-map {
     width: 100%;
   }
 #map1 {
+  width: 50%;
   right: 0;
   left: auto;
+}
+
+#display1 {
+  width: 50%;
+  right: auto;
+  left: 0;
 }
 
 .ctrl {

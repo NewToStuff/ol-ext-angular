@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ol-ext-angular';
+  geoObj = 'This is a test Geo Obj';
+
+  onGeoSaved(geoJson){
+    this.geoObj = geoJson;
+  }
 }

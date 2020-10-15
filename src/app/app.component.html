@@ -3,6 +3,7 @@
   lon=2.4246 
   lat=48.845 
   zoom=13
+  (geoSaved)="onGeoSaved($event)"
 >
   <!-- Add a layer watercolor -->
   <app-layer layer="watercolor"></app-layer>
@@ -19,4 +20,9 @@
 
 <!-- Define control outside the map -->
 <app-mouse-position></app-mouse-position>
+
+<app-display-geo 
+    id="display1"
+    [geoObj]="geoObj"
+    ></app-display-geo>
 
