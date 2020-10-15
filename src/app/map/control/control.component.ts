@@ -115,7 +115,7 @@ export class ControlComponent implements OnInit {
   edit.getInteraction('DrawPolygon').on('drawstart', function(e){
     console.log('CHANGE Draw shape',e);
     tooltip.setFeature(e.feature);
-    e.feature.getGeometry().on('change', (e) => {calculateMeasure(e, e.target.map_, tooltip)});
+    e.feature.getGeometry().on('change', (e) => {calculateMeasure(e, edit.getMap(), tooltip)});
     tooltip.setInfo('Click to continue drawing shape...');
     });
 
