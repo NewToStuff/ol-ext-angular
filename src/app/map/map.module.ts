@@ -8,6 +8,8 @@ import { ControlComponent } from './control/control.component';
 import { MousePositionComponent } from './control/mouse-position.component';
 import { InteractionComponent } from './interaction/interaction.component';
 import { DisplayGeoComponent } from './display/display-geo/display-geo.component';
+import { MapidService } from './mapid.service';
+import { MapdataService } from './mapdata.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DisplayGeoComponent } from './display/display-geo/display-geo.component
   ],
   imports: [],
   providers: [
-    MapService
+    MapService,
+    MapidService,
+    MapdataService
   ],
   exports: [
     MapComponent,

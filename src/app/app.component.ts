@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
+import { MapdataService } from './map/mapdata.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ol-ext-angular';
-  geoObj = 'This is a test Geo Obj';
+  geoObj: string;
 
-  onGeoSaved(geoJson){
-    this.geoObj = geoJson;
+  constructor (private mapdataService: MapdataService){}
+  ngOnInit(){
+    this.mapdataService.dataChanged
+    .subscribe({
+      next: (v) =>{ 
+        console.log(`Geo Changed: ${v}`);
+        this.geoObj = v.toString();
+      }
+      
+});
   }
+
 }

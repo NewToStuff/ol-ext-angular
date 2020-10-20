@@ -5,6 +5,9 @@ import OlMap from 'ol/Map';
 import { fromLonLat } from 'ol/proj';
 import { MapService } from './map.service';
 import { MapidService } from './mapid.service';
+import { Subject } from 'rxjs';
+import { MapdataService } from './mapdata.service';
+
 
 /**
  * Map Component: load and display a map
@@ -42,16 +45,20 @@ export class MapComponent implements OnInit {
   @Input() zoom: string;
 
 
-  @Output() geoSaved: EventEmitter<Object> = new EventEmitter();
+
+ 
+  @Output() geoSaved: Subject<Object> = new Subject();
 
   /**
    * [ol.Map](http://openlayers.org/en/latest/apidoc/ol.Map.html) Openlayer map object
    */
   map: OlMap;
 
+
   constructor(
     private mapService: MapService,
     private mapidService: MapidService,
+    private mapdataService: MapdataService,
     private elementRef: ElementRef
   ) {}
 
@@ -77,6 +84,6 @@ export class MapComponent implements OnInit {
 
 
   geoChanged(geo){
-    this.geoSaved.emit(geo);
+    this.mapdataService.updateData(geo);
   }
 }
